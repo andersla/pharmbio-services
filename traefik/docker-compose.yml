@@ -1,0 +1,21 @@
+version: '2'
+
+networks:
+  web:
+    driver: bridge
+
+services:
+  traefik:
+    image: traefik:1.7.3
+    container_name: traefik
+    restart: always
+    networks:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./traefik.toml:/etc/traefik/traefik.toml"
+      - "./acme/acme.json:/acme.json"
+#     - "/opt/traefik/acme.json:/acme.json"
