@@ -129,7 +129,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik_web
       - traefik.backend=grafana
-      - traefik.frontend.rule="$GRAFANA_TRAEFIK_FRONTEND_RULE"
+      - traefik.frontend.rule=$GRAFANA_TRAEFIK_FRONTEND_RULE
       - traefik.port=3000
     mem_limit: 2g
     cpus: 2
