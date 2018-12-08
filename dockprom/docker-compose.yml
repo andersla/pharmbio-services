@@ -30,6 +30,8 @@ services:
     restart: unless-stopped
     expose:
       - 9090
+    ports:
+      - 9090:9090
     networks:
       - monitor-net
     labels:
@@ -72,6 +74,22 @@ services:
     labels:
       org.label-schema.group: "monitoring"
   
+  libvirt_exporter:
+    image: andersla/libvirt_exporter
+    container_name: libvirt_exporter
+    privileged: true
+    volumes:
+      - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock
+    restart: always
+    expose:
+      - 9177
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2  
+ 
   nvidia_gpu_prometheus_exporter:
     image: fish/nvidia_gpu_prometheus_exporter 
     container_name: nvidia_gpu_prometheus_exporter
@@ -145,21 +163,3 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  caddy:
-    image: stefanprodan/caddy
-    container_name: caddy
-    ports:
-      - "3000:3000"
-      - "9090:9090"
-      - "9093:9093"
-      - "9091:9091"
-    volumes:
-      - ./caddy/:/etc/caddy/
-    environment:
-      - ADMIN_USER=${ADMIN_USER:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-    restart: unless-stopped
-    networks:
-      - monitor-net
-    labels:
-      org.label-schema.group: "monitoring"

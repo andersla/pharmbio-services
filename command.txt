@@ -1,0 +1,1 @@
+ADMIN_USER='admin' ADMIN_PASSWORD='xxxxxxxxxxxxxxxxxx' GRAFANA_TRAEFIK_FRONTEND_RULE='Host:monitor-klose.pharmb.io' docker-compose up

@@ -34,6 +34,11 @@ scrape_configs:
     static_configs:
       - targets: ['pushgateway:9091']
   
+  - job_name: 'libvirt_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['libvirt_exporter:9177']
+
   - job_name: 'nvidia_gpu_prometheus_exporter'
     scrape_interval: 3s
     static_configs:
