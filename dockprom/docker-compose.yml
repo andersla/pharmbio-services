@@ -36,6 +36,8 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 4g
+    cpus: 2
   
   alertmanager:
     image: prom/alertmanager:v0.15.2
@@ -52,6 +54,8 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2
 
   nodeexporter:
     image: prom/node-exporter:v0.16.0
@@ -73,6 +77,8 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2
   
   libvirt_exporter:
     image: andersla/libvirt_exporter
@@ -105,6 +111,29 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2
+  
+#  process_exporter:
+#    image: ncabatoff/process-exporter 
+#    container_name: process_exporter
+#    privileged: true
+#    volumes:
+#      - /proc:/host/proc
+#      - ./prometheus/:/config
+#    command:
+#      - '--procfs'
+#      - '/host/proc'
+##      - '-config.path'
+###      - '/config/filename.yml'
+#    expose:
+#      - 9256
+#    networks:
+#      - monitor-net
+#    labels:
+#      org.label-schema.group: "monitoring"
+
+# docker run -d --rm -p 9256:9256 --privileged -v /proc:/host/proc -v `pwd`:/config ncabatoff/process-exporter --procfs /host/proc -config.path /config/filename.yml
 
   cadvisor:
     image: google/cadvisor:v0.31.0
@@ -122,9 +151,11 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2
   
   grafana:
-    image: grafana/grafana:5.2.4
+    image: grafana/grafana:5.4.3
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
@@ -162,4 +193,6 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    mem_limit: 2g
+    cpus: 2
 
